@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <title>Listando Pacientes</title>
+</head>
+
+<body>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nome</th>
+                <th scope="col">CPF</th>
+                <th scope="col">Telefone</th>
+                <th scope="col">E-mail</th>
+            </tr>
+        </thead>
+        <tbody id="pacientesTableBody">
+        </tbody>
+    </table>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        axios.get('http://localhost:4040/readPacientes')
+            .then(function (response) {
+                const pacientes = response.data;
+                const pacientesTableBody = document.getElementById('pacientesTableBody');
+
+                pacientes.forEach(function (paciente) {
+                    const row = document.createElement('tr');
+
+                    const idColumn = document.createElement('td');
+                    idColumn.textContent = paciente.id;
+                    row.appendChild(idColumn);
+
+                    const nomeColumn = document.createElement('td');
+                    nomeColumn.textContent = paciente.nome;
+                    row.appendChild(nomeColumn);
+
+                    const cpfColumn = document.createElement('td');
+                    cpfColumn.textContent = paciente.cpf;
+                    row.appendChild(cpfColumn);
+
+                    const telefoneColumn = document.createElement('td');
+                    telefoneColumn.textContent = paciente.telefone;
+                    row.appendChild(telefoneColumn);
+
+                    const emailColumn = document.createElement('td');
+                    emailColumn.textContent = paciente.email;
+                    row.appendChild(emailColumn);
+
+                    pacientesTableBody.appendChild(row);
+                });
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
+    </script>
+</body>
+
+</html>
